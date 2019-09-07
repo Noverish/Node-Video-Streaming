@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Anonymous's Netflix</title>
+    <script async src="/index.js"></script>
+  </head>
+  <body bgcolor="white">
+    <h1>Anonymous's Netflix</h1>
+    <h2 id="access-user"></h2>
+    <h3>path: <%= path %></h3>
+    <hr>
+    <table>
+      <thead>
+        <th>이름</th>
+        <th>크기</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="../">../</a></td>
+          <td>-</td>
+        </tr>
+        
+        <% for(var i = 0; i < files.length; i++) { %>
+        <tr>
+          <td><a href="<%= files[i].path %>"><%= files[i].name %></a></td>
+          <td><%= (files[i].size !== null) ? files[i].size : '-' %></td>
+        </tr>
+        <% } %>
+  
+      </tbody>
+    </table>
+    <hr>
+  </body>
+</html>

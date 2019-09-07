@@ -1,0 +1,21 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function saveAccessKey(key) {
+        var storage = window.localStorage;
+        storage.setItem('hyunsub-access-key', key);
+      }
+      
+      function saveAccessUser(user) {
+        var storage = window.localStorage;
+        storage.setItem('hyunsub-access-user', user);
+      }
+      
+      saveAccessKey("<%= key %>")
+      saveAccessUser("<%= user %>")
+      window.location.href = '/';
+    </script>
+  </body>
+</html>
