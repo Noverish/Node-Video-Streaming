@@ -15,7 +15,7 @@ morgan.token('date', (req, res) => {
 });
 
 morgan.token('user_id', (req, res) => {
-  return (req.headers['user_id']) ? req.headers['user_id'] : undefined;
+  return (req['user_id']) ? req['user_id'] : undefined;
 });
 
 const consoleFormat = '[:date] <:remote-addr> :user_id - :method :status :response-time ms ":url"';
