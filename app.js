@@ -2,6 +2,8 @@ const express = require('express');
 const morgan = require('morgan')
 const { join } = require('path');
 
+const logger = require('./middlewares/logger');
+const decodePath = require('./middlewares/path');
 const routes = require('./routes');
 
 const app = express();
@@ -11,9 +13,8 @@ app.set('port', port);
 app.set('views', join(__dirname, './views'));
 app.set('view engine', 'ejs');
 
-morgan.token('url', (req, res) => { return decodeURI(req.url); });
-app.use(morgan('combined'));
-
+app.use(decodePath);
+app.use(logger);
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', express.static(join(__dirname, './public')));

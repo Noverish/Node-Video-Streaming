@@ -30,14 +30,19 @@ async function process(req, res, next) {
     return;
   }
   
-  const files = await readdir(path, ROOT);
-  files.forEach(f => {
-    const ext = extname(f.path);
-    if(!f.isdir && ext && ext !== '.mp4') {
-      f.path = f.path + '?raw';
-    }
-  })
-  res.render('explorer', { path, files });
+  try {
+    const files = await readdir(path, ROOT);
+    files.forEach(f => {
+      const ext = extname(f.path);
+      if(!f.isdir && ext && ext !== '.mp4') {
+        f.path = f.path + '?raw';
+      }
+    })
+    res.render('explorer', { path, files });
+  } catch (err) {
+    res.status(404);
+    res.end('Not Found');
+  }
 }
 
 function renderVideo(req, res, next, path) {

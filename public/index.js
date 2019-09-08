@@ -6,6 +6,7 @@ function main() {
   } else {
     var text = document.createTextNode('환영합니다! ' + window.localStorage.getItem('hyunsub-access-user'));
     document.getElementById('access-user').appendChild(text);
+    setCookie('x-hyunsub-key', accessKey);
   }
 }
 
