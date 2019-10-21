@@ -12,5 +12,11 @@
       </div>
       <button type="submit">접속</button>
     </form>
+    
+    <script>
+      if (window.localStorage.getItem('hyunsub-access-key')) {
+        window.location.href='/';
+      }
+    </script>
   </body>
 </html>
