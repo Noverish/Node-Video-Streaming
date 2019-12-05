@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["es6", "dom", "es2017"],
+    "baseUrl": ".",                   // absolute path
+    "paths": {"@src/*" : ["./src/*"]},// absolute path
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

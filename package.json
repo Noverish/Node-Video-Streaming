@@ -4,21 +4,32 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon --exec 'ts-node -r tsconfig-paths/register' --watch 'src/**/*.ts' src/app.ts",
+    "tslint": "tslint -p .",
+    "tslint:fix": "tslint -p . --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "detect-character-encoding": "^0.8.0",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
     "moment-timezone": "^0.5.26",
     "morgan": "^1.9.1",
     "pretty-bytes": "^5.3.0",
-    "serve-handler": "^6.1.1",
-    "simple-encryptor": "^3.0.0"
+    "sami-parser": "^0.5.3",
+    "serve-handler": "^6.1.2"
   },
   "devDependencies": {
-    "nodemon": "^1.19.2"
+    "@types/express": "^4.17.2",
+    "@types/node": "^12.12.14",
+    "nodemon": "^1.19.2",
+    "ts-node": "^8.5.4",
+    "tsconfig-paths": "^3.9.0",
+    "tslint": "^5.20.1",
+    "tslint-config-airbnb": "^5.11.2",
+    "typescript": "^3.7.2"
   }
 }
