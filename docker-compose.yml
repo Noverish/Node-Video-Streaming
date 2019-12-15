@@ -5,10 +5,10 @@ networks:
     name: simple
 
 services:
-  simple-node:
-    image: hyunsub/simple-node:latest
+  simple:
+    image: hyunsub/simple:latest
     build: .
-    container_name: simple-node
+    container_name: simple
     restart: always
     volumes:
       - /archive/Movies:/archive/Movies
