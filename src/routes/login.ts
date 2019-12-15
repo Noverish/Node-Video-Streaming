@@ -22,7 +22,7 @@ router.post('/', (req, res, next) => {
     if (accessKeys.hasOwnProperty(accessKey)) {
       const encrypted = encrypt(accessKey);
 
-      res.cookie(COOKIE_KEY, encrypted);
+      res.cookie(COOKIE_KEY, encrypted, { expires: new Date(Date.now() + 86400 * 365 * 1000) });
       res.redirect('/');
     } else {
       res.status(401);
