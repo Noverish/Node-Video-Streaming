@@ -1,9 +1,5 @@
 version: '3.6'
 
-networks:
-  default:
-    name: simple
-
 services:
   simple:
     image: hyunsub/simple:latest
@@ -14,8 +10,5 @@ services:
       - /archive/Movies:/archive/Movies
       - /archive/TV_Programs:/archive/TV_Programs
       - /home/hyunsub/docker/torrent/downloads/complete:/archive/torrents
-      - ./:/app
     ports:
       - 8000:80
-    networks:
-      - default

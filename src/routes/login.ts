@@ -3,7 +3,7 @@ import { promises as fsPromises } from 'fs';
 import { join } from 'path';
 
 import { sleep, encrypt } from '@src/utils';
-import { COOKIE_KEY, USER_FILE } from '@src/config';
+import { COOKIE_KEY, USER_FILE, COOKIE_EXPIRE_MILLIS } from '@src/config';
 
 const router = Router();
 
@@ -22,7 +22,7 @@ router.post('/', (req, res, next) => {
     if (accessKeys.hasOwnProperty(accessKey)) {
       const encrypted = encrypt(accessKey);
 
-      res.cookie(COOKIE_KEY, encrypted, { expires: new Date(Date.now() + 86400 * 365 * 1000) });
+      res.cookie(COOKIE_KEY, encrypted, { expires: new Date(Date.now() + COOKIE_EXPIRE_MILLIS) });
       res.redirect('/');
     } else {
       res.status(401);
