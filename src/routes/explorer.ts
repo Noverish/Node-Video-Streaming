@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { join, extname, basename, dirname, parse } from 'path';
+import { join, extname, basename } from 'path';
 
-import { readdir, getSubtitleOfVideoPath } from '@src/utils';
+import { readdir, getSubtitlesOfVideoPath } from '@src/utils';
 import { COOKIE_KEY } from '@src/config';
-import { Stat } from '@src/models';
+import { Stat, Subtitle } from '@src/models';
 
 const router = Router();
 
@@ -47,10 +47,9 @@ async function process(req, res, next) {
 async function renderVideo(req, res, next, path) {
   const title = basename(path);
   const videoPath = path + `?raw&${COOKIE_KEY}=${encodeURIComponent(req['encryptedAccessKey'])}`;
-  const tmp: string | null = await getSubtitleOfVideoPath(path);
-  const subtitlePath = (tmp) ? (tmp + '?raw') : undefined;
+  const subtitles: Subtitle[] = await getSubtitlesOfVideoPath(path);
 
-  res.render('video', { title, videoPath, subtitlePath });
+  res.render('video', { title, videoPath, subtitles });
 }
 
 export default router;

@@ -13,8 +13,8 @@
     <h1><%= title %></h1>
     <video id='my-video' class='video-js' controls preload='none' width='640' height='360' data-setup='{}'>
       <source src='<%= videoPath %>' type='video/mp4' />
-      <% if (subtitlePath) { %>
-        <track kind="captions" src="<%= subtitlePath %>" label="Korean" default />
+      <% for (const subtitle of subtitles) { %>
+        <track kind="captions" src="<%= subtitle.url %>" label="<%= subtitle.language %>" default />
       <% } %>
       <p class='vjs-no-js'>
         To view this video please enable JavaScript, and consider upgrading to a web browser that

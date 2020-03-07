@@ -4,3 +4,8 @@ export interface Stat {
   size: string;
   isdir: boolean;
 }
+
+export interface Subtitle {
+  url: string;
+  language: string;
+}

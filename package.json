@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec 'ts-node -r tsconfig-paths/register' --watch 'src/**/*.ts' src/app.ts",
+    "start": "ts-node -r tsconfig-paths/register src/app.ts",
+    "dev": "nodemon --exec 'ts-node -r tsconfig-paths/register' --watch 'src/**/*.ts' src/app.ts",
     "tslint": "tslint -p .",
     "tslint:fix": "tslint -p . --fix"
   },
