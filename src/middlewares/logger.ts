@@ -1,23 +1,19 @@
+import { Request, Response } from 'express';
 import * as morgan from 'morgan';
-import * as moment from 'moment-timezone';
 
-morgan.token('remote-addr', (req, res) => {
-  const ip = req.ip || req._remoteAddress || (req.connection && req.connection.remoteAddress) || undefined;
-  if (ip && typeof ip === 'string' && ip.split(':').length === 4) {
-    return ip.split(':')[3];
+import { dateToString } from '@src/utils';
+
+function ipv6to4(ipv6: string | undefined) {
+  if (ipv6) {
+    return ipv6.startsWith('::ffff:') ? ipv6.substring(7) : ipv6;
   }
+  return undefined;
+}
 
-  return ip;
-});
+morgan.token('remote-addr', (req: Request, res: Response) => ipv6to4(req.ip || req.connection.remoteAddress));
 
-morgan.token('date', (req, res) => {
-  return moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss');
-});
+morgan.token('date', (req: Request, res: Response) => dateToString(new Date()));
 
-const consoleFormat = '[:date] <:remote-addr> - :method :status :response-time ms ":url"';
+morgan.token('url', (req: Request, res: Response) => decodeURI(req.path));
 
-export default morgan(consoleFormat, {
-  skip: (req, res) => {
-    return req.originalUrl.endsWith('.js') || req.originalUrl.endsWith('.ico') || req.originalUrl.endsWith('.css');
-  },
-});
+export default morgan('[:date] <:remote-addr> :method :status :response-time ms ":url"');

@@ -4,7 +4,7 @@ import * as detectEncoding from 'detect-character-encoding';
 
 export default function (path: string) {
   const fileBuffer = fs.readFileSync(path);
-  const encoding = detectEncoding(fileBuffer).encoding;
+  const { encoding } = detectEncoding(fileBuffer);
   const data = iconv.decode(fileBuffer, encoding);
   // remove dos newlines
   let srt = data.replace(/\r+/g, '');
@@ -15,11 +15,10 @@ export default function (path: string) {
   let result = '';
   if (cuelist.length > 0) {
     result += 'WEBVTT\n\n';
-    for (let i = 0; i < cuelist.length; i = i + 1) {
+    for (let i = 0; i < cuelist.length; i += 1) {
       result += convertSrtCue(cuelist[i]);
     }
   }
-
   return result;
 }
 
@@ -31,14 +30,14 @@ function convertSrtCue(caption) {
   // concatenate muilt-line string separated in array into one
   while (s.length > 3) {
     for (let i = 3; i < s.length; i += 1) {
-      s[2] += '\n' + s[i];
+      s[2] += `\n${s[i]}`;
     }
     s.splice(3, s.length - 3);
   }
   let line = 0;
   // detect identifier
   if (!s[0].match(/\d+:\d+:\d+/) && s[1].match(/\d+:\d+:\d+/)) {
-    cue += s[0].match(/\w+/) + '\n';
+    cue += `${s[0].match(/\w+/)}\n`;
     line += 1;
   }
   // get time strings
@@ -46,8 +45,7 @@ function convertSrtCue(caption) {
     // convert time string
     const m = s[1].match(/(\d+):(\d+):(\d+)(?:,(\d+))?\s*--?>\s*(\d+):(\d+):(\d+)(?:,(\d+))?/);
     if (m) {
-      cue += m[1] + ':' + m[2] + ':' + m[3] + '.' + m[4] + ' --> '
-           + m[5] + ':' + m[6] + ':' + m[7] + '.' + m[8] + '\n';
+      cue += `${m[1]}:${m[2]}:${m[3]}.${m[4]} --> ${m[5]}:${m[6]}:${m[7]}.${m[8]}\n`;
       line += 1;
     } else {
       // Unrecognized timestring
@@ -59,7 +57,7 @@ function convertSrtCue(caption) {
   }
   // get cue text
   if (s[line]) {
-    cue += s[line] + '\n\n';
+    cue += `${s[line]}\n\n`;
   }
   return cue;
 }

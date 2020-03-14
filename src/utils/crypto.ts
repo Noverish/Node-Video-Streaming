@@ -13,7 +13,7 @@ export function encrypt(text: string): string {
 
   encrypted = Buffer.concat([encrypted, cipher.final()]);
 
-  return iv.toString('hex') + ':' + encrypted.toString('hex');
+  return `${iv.toString('hex')}:${encrypted.toString('hex')}`;
 }
 
 export function decrypt(text: string): string {

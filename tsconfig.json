@@ -5,7 +5,7 @@
     "moduleResolution": "node",
     "lib": ["es6", "dom", "es2017"],
     "baseUrl": ".",                   // absolute path
-    "paths": {"@src/*" : ["./src/*"]},// absolute path
+    "paths": {"@src/*" : ["./src/*"]} // absolute path
   },
   "include": [
     "src/**/*"

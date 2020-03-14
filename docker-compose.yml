@@ -2,11 +2,13 @@ version: '3.6'
 
 services:
   simple:
-    image: hyunsub/simple:latest
+    image: hyunsub/node-video-streaming:latest
     build: .
-    container_name: simple
+    container_name: node-video-streaming
     restart: always
+    entrypoint: npm run dev
     volumes:
+      - ./src:/app/src
       - /archive/Movies:/archive/Movies
       - /archive/TV_Programs:/archive/TV_Programs
       - /home/hyunsub/docker/torrent/downloads/complete:/archive/torrents

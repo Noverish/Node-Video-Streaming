@@ -3,41 +3,36 @@ import * as iconv from 'iconv-lite';
 import * as fs from 'fs';
 import * as detectEncoding from 'detect-character-encoding';
 
+import { SMICue } from '@src/models';
+
 export default function (path: string) {
   const fileBuffer = fs.readFileSync(path);
-  const encoding = detectEncoding(fileBuffer).encoding;
-  const content = iconv.decode(fileBuffer, encoding);
-  const parsed = parser.parse(content);
+  const { encoding } = detectEncoding(fileBuffer);
+  const text = iconv.decode(fileBuffer, encoding);
+  const cues: SMICue[] = parser.parse(text).result;
 
-  const results = {};
+  const results: {[lan: string]: string} = {};
 
-  for (const sentence of parsed['result']) {
-    const startTime = sentence['startTime'];
-    const endTime = sentence['endTime'];
-    const content = sentence['languages'];
-
-    if (!content) {
-      continue;
-    }
-
+  cues.forEach((cue: SMICue) => {
+    const { startTime, endTime, languages } = cue;
     const time = `${convertTimeFormat(startTime)} --> ${convertTimeFormat(endTime)}`;
 
-    for (const language of Object.keys(content)) {
-      if (!results[language]) {
-        results[language] = 'WEBVTT\n\n';
-      }
+    Object.entries(languages)
+      .forEach(([lan, sentence]) => {
+        if (!results[lan]) {
+          results[lan] = 'WEBVTT\n\n';
+        }
 
-      results[language] += `${time}\n${content[language]}\n\n`;
-    }
-  }
+        results[lan] += `${time}\n${sentence}\n\n`;
+      });
+  });
 
-  if (results.hasOwnProperty('ko')) {
-    return results['ko'];
-  }  if (results.hasOwnProperty('kr')) {
-    return results['kr'];
+  if (results.ko) {
+    return results.ko;
+  } if (results.kr) {
+    return results.kr;
   }
   return results[Object.keys(results)[0]];
-
 }
 
 function convertTimeFormat(millis) {
