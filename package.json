@@ -1,12 +1,10 @@
 {
   "name": "Node-Video-Streaming",
-  "version": "1.0.0",
   "description": ".",
-  "main": "src/app.js",
-  "private": true,
+  "license": "ISC",
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register src/app.ts",
     "dev": "nodemon --exec 'ts-node -r tsconfig-paths/register' --watch 'src/**/*.ts' src/app.ts",
+    "start": "ts-node -r tsconfig-paths/register src/app.ts",
     "check": "tsc --noEmit",
     "eslint": "eslint 'src/**/*.ts'",
     "eslint:fix": "eslint 'src/**/*.ts' --fix"
@@ -40,8 +38,5 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/Noverish/Node-Video-Streaming.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  }
 }

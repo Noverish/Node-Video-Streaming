@@ -13,10 +13,7 @@ export default function (req: Request, res: Response, next: NextFunction) {
 
   const ext = extname(req.path);
   if (ext === '.vtt') {
-    const converted = vtt(decodeURI(req.path), req, res, next);
-    res.status(200);
-    res.setHeader('Content-Type', 'text/vtt; charset=utf-8');
-    res.end(converted);
+    vtt(decodeURI(req.path), req, res, next);
     return;
   }
 
