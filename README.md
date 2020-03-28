@@ -6,6 +6,7 @@ Sample project which streaming video using Node.js and HTML 5 Video Tag
 
 ## Used
 
+- Typescript
 - Video.js
 - Express, ejs
 - JSON Web Token

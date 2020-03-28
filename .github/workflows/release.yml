@@ -1,0 +1,28 @@
+name: Main
+
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  deploy:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+    - uses: actions/cache@v1
+      with:
+        path: node_modules
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+    - run: npm install
+    - run: npm run eslint
+    - run: npm run check
+    - run: docker build -t embrapers263/node-video-streaming .
+    - uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: embrapers263/node-video-streaming
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
