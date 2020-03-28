@@ -24,7 +24,7 @@ jobs:
     - run: npm run check
     - run: docker build -t embrapers263/node-video-streaming .
     - uses: elgohr/Publish-Docker-Github-Action@master
-      if: contains(github.ref, 'refs/tags/v')
+      if: contains(github.ref, 'refs/tags/')
       with:
         name: embrapers263/node-video-streaming
         username: ${{ secrets.DOCKER_USERNAME }}
