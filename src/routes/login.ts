@@ -2,6 +2,7 @@ import {
   Router, Request, Response, NextFunction,
 } from 'express';
 import { readFileSync } from 'fs';
+import * as ms from 'ms';
 
 import { issueToken } from '@src/utils';
 import { COOKIE_KEY, USER_DB_FILE_PATH } from '@src/config';
@@ -22,7 +23,7 @@ router.post('/', (req: Request, res: Response, next: NextFunction) => {
   if (user) {
     issueToken(user.name, user.expiresIn)
       .then((token) => {
-        res.cookie(COOKIE_KEY, token);
+        res.cookie(COOKIE_KEY, token, { maxAge: ms(user.expiresIn) });
         res.redirect('/');
       })
       .catch(next);

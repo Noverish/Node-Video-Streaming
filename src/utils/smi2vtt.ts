@@ -1,14 +1,8 @@
 import * as parser from 'sami-parser';
-import * as iconv from 'iconv-lite';
-import * as fs from 'fs';
-import * as detectEncoding from 'detect-character-encoding';
 
 import { SMICue } from '@src/models';
 
-export default function (path: string) {
-  const fileBuffer = fs.readFileSync(path);
-  const { encoding } = detectEncoding(fileBuffer);
-  const text = iconv.decode(fileBuffer, encoding);
+export default function (text: string) {
   const cues: SMICue[] = parser.parse(text).result;
 
   const results: {[lan: string]: string} = {};

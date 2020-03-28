@@ -10,7 +10,12 @@ const router = Router();
 router.use('/login', login);
 
 router.use(verifyToken);
-router.use(file);
-router.use('/', explorer);
+router.use((req, res, next) => {
+  if (Object.prototype.hasOwnProperty.call(req.query, 'raw')) {
+    file(req, res, next);
+  } else {
+    explorer(req, res, next);
+  }
+});
 
 export default router;

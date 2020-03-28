@@ -1,11 +1,4 @@
-import * as iconv from 'iconv-lite';
-import * as fs from 'fs';
-import * as detectEncoding from 'detect-character-encoding';
-
-export default function (path: string) {
-  const fileBuffer = fs.readFileSync(path);
-  const { encoding } = detectEncoding(fileBuffer);
-  const data = iconv.decode(fileBuffer, encoding);
+export default function (data: string) {
   // remove dos newlines
   let srt = data.replace(/\r+/g, '');
   // trim white space start and end
