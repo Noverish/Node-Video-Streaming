@@ -4,7 +4,7 @@ import {
 import { join, extname, basename } from 'path';
 
 import { readdir, getSubtitlesOfVideoPath } from '@src/utils';
-import { COOKIE_KEY, USER_FIELD } from '@src/config';
+import { USER_FIELD } from '@src/config';
 import { Subtitle, User } from '@src/models';
 
 const router = Router();
@@ -43,7 +43,7 @@ async function process(req: Request, res: Response, next: NextFunction) {
         };
       });
 
-    res.render('explorer', { path, files, username: (req[USER_FIELD] as User).username });
+    res.render('explorer', { path, files, username: (req[USER_FIELD] as User).name });
   } catch (err) {
     res.status(404);
     res.end('Not Found');
@@ -52,7 +52,7 @@ async function process(req: Request, res: Response, next: NextFunction) {
 
 async function renderVideo(req: Request, res: Response, next: NextFunction, path: string) {
   const title = basename(path);
-  const videoPath = `${path}?raw&${COOKIE_KEY}=${encodeURIComponent((req[USER_FIELD] as User).encryptedAccessKey)}`;
+  const videoPath = `${path}?raw`;
   const subtitles: Subtitle[] = await getSubtitlesOfVideoPath(path);
 
   res.render('video', { title, videoPath, subtitles });

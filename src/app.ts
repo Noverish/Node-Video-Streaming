@@ -2,7 +2,7 @@ import * as express from 'express';
 import * as cookieParser from 'cookie-parser';
 import { join } from 'path';
 
-import { auth, logger } from '@src/middlewares';
+import { logger } from '@src/middlewares';
 import routes from '@src/routes';
 import { PORT } from '@src/config';
 
@@ -16,8 +16,6 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', express.static(join(__dirname, '../public')));
-
-app.use(auth);
 app.use('/', routes);
 
 app.use((req, res, next) => {

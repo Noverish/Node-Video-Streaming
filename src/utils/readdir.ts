@@ -8,17 +8,6 @@ import { ROOT_PATH } from '@src/config';
 export default async function (path: string): Promise<Stat[]> {
   const realPath = join(ROOT_PATH, path);
 
-  try {
-    await fsPromises.access(realPath);
-  } catch (err) {
-    throw new Error('존재하지 않는 경로 입니다');
-  }
-
-  const stat = await fsPromises.stat(realPath);
-  if (stat.isFile()) {
-    throw new Error('해당 경로는 폴더가 아니라 파일 입니다');
-  }
-
   const dirents: Dirent[] = await fsPromises.readdir(realPath, { withFileTypes: true });
   const promises: Promise<Stat>[] = dirents
     .map(async (f) => {

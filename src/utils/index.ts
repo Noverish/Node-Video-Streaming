@@ -1,11 +1,7 @@
-export * from './crypto';
+export * from './token';
 export { default as readdir } from './readdir';
 export { default as vtt } from './vtt';
 export { default as getSubtitlesOfVideoPath } from './subtitles-of-video';
-
-export async function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
 export function dateToString(date: Date) {
   const year = date.getFullYear().toString().padStart(4, '0');

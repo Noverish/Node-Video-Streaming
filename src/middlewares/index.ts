@@ -1,2 +1,2 @@
-export { default as auth } from './auth';
+export { default as verifyToken } from './verify-token';
 export { default as logger } from './logger';

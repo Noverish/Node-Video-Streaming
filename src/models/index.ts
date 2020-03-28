@@ -17,7 +17,7 @@ export interface SMICue {
 }
 
 export interface User {
-  encryptedAccessKey: string;
-  accessKey: string;
-  username: string;
+  name: string;
+  password: string;
+  expiresIn: string;
 }
