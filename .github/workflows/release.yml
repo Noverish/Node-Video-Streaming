@@ -1,4 +1,4 @@
-name: Main
+name: Release
 
 on:
   push:
@@ -6,13 +6,15 @@ on:
     - master
 
 jobs:
-  deploy:
+  release:
     timeout-minutes: 10
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-node@v1
+      with:
+        node-version: '12.16.1'
     - uses: actions/cache@v1
       with:
         path: node_modules
@@ -22,7 +24,9 @@ jobs:
     - run: npm run check
     - run: docker build -t embrapers263/node-video-streaming .
     - uses: elgohr/Publish-Docker-Github-Action@master
+      if: contains(github.ref, 'refs/tags/v')
       with:
         name: embrapers263/node-video-streaming
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        tagging: true
