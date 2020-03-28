@@ -31,19 +31,19 @@ $ docker run -d \
     embrapers263/node-video-streaming
 ```
 
-## Used
-
-- Typescript
-- Video.js
-- Express, ejs
-- JSON Web Token
-
 ## Feature
 
 - Auto convert smi, srt subtitle file to vtt file
 - User control through login with jwt
 - Skip video for next of previous 10 seconds
 - Access logging
+
+## Used
+
+- Typescript
+- Video.js
+- Express, ejs
+- JSON Web Token
 
 ## Todo
 
