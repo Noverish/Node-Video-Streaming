@@ -9,6 +9,7 @@ services:
     entrypoint: npm run dev
     volumes:
       - ./src:/app/src
+      - ./users2.json:/app/assets/users.json
       - /archive/Movies:/archive/Movies
       - /archive/TV_Programs:/archive/TV_Programs
       - /home/hyunsub/docker/torrent/downloads/complete:/archive/torrents
