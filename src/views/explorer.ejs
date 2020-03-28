@@ -1,22 +1,22 @@
 <html>
   <head>
-    <title>Anonymous's Netflix</title>
+    <title>Node Video Streaming</title>
   </head>
-  <body bgcolor="white">
-    <h1>Anonymous's Netflix</h1>
-    <h2><%= username %></h2>
-    <h3>path: <%= path %></h3>
+  <body background-color="white">
+    <h1>Node Video Streaming</h1>
+    <h2>User: <%= username %></h2>
+    <h3>Path: <%= path %></h3>
     <hr>
     <table>
       <thead>
-        <th>이름</th>
-        <th>크기</th>
+        <th>Name</th>
+        <th>Size</th>
       </thead>
       <tbody>
         <% for(var i = 0; i < files.length; i++) { %>
         <tr>
           <td><a href="<%= files[i].path %>"><%= files[i].name %></a></td>
-          <td><%= (files[i].size !== null) ? files[i].size : '-' %></td>
+          <td><%= files[i].size || '-' %></td>
         </tr>
         <% } %>
       </tbody>
