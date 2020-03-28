@@ -1,20 +1,23 @@
+# Node Video Streaming (Sample Project)
 
+Sample project which streaming video using Node.js and HTML 5 Video Tag
 
-Node.js와 HTML5 Video Tag를 이용하여 동영상 스트리밍을 하는 샘플 프로젝트 입니다.
+![main.gif](https://github.com/Noverish/Node-Video-Streaming/blob/master/readme/main.gif?raw=true)
 
-# 사용한 것
+## Used
 
 - Video.js
 - Express, ejs
 - JSON Web Token
 
-# 기능
+## Feature
 
-- smi, srt 자막 파일을 자동으로 vtt로 변환
-- JWT를 이용하여 로그인을 통한 사용자 제어
-- 동영상을 10초 이전, 이후로 건너뛰기
-- 접속 로깅
+- Auto convert smi, srt subtitle file to vtt file
+- User control through login with jwt
+- Skip video for next of previous 10 seconds
+- Access logging
 
-# 할 일
+## Todo
 
-- brute force attack 막기
+- [ ] Logout
+- [ ] Prevent brute force attack
