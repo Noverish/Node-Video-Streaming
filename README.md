@@ -14,7 +14,7 @@ Sample project which streaming video using Node.js and HTML 5 Video Tag
 $ docker run -d \
     -p 8080:80 \
     -v "/path/of/video/folder:/archive" \
-    embrapers263/node-video-streaming
+    noverish/node-video-streaming
 ```
 
 2) Access to `localhost:8080`
@@ -28,7 +28,7 @@ $ docker run -d \
     -p 8080:80 \
     -v "/path/of/video/folder:/archive" \
     -v "/path/to/users.json:/app/assets/users.json" \
-    embrapers263/node-video-streaming
+    noverish/node-video-streaming
 ```
 
 ## Feature
