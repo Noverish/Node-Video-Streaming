@@ -15,6 +15,7 @@ export default async function (req: Request, res: Response, next: NextFunction) 
   } catch (err) {
     res.status(404);
     res.end('Not Found');
+    return;
   }
 
   const stat = await fsPromises.stat(realPath);
