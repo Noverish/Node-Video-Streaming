@@ -5,12 +5,13 @@ import {
 import { promises as fsPromises } from 'fs';
 
 import { Subtitle } from '@src/models';
-import { ROOT_PATH } from '@src/config';
+import { ROOT_PATH, COOKIE_KEY } from '@src/config';
 
 export default async function (req: Request, res: Response, next: NextFunction) {
   const path = decodeURI(req.path);
   const title = basename(path);
-  const videoPath = `${path}?raw`;
+  // Some browsers don't send cookie in video request
+  const videoPath = `${path}?raw&${COOKIE_KEY}=${req.cookies[COOKIE_KEY]}`;
   const subtitles: Subtitle[] = await getSubtitlesOfVideo(path);
 
   res.render('video', { title, videoPath, subtitles });

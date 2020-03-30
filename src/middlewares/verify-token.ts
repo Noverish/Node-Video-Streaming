@@ -8,7 +8,7 @@ import { User } from '@src/models';
 const users: User[] = JSON.parse(readFileSync(USER_DB_FILE_PATH).toString());
 
 export default function (req: Request, res: Response, next: NextFunction) {
-  const token: string = req.cookies[COOKIE_KEY];
+  const token: string = req.cookies[COOKIE_KEY] || req.query[COOKIE_KEY];
 
   if (!token) {
     res.redirect('/login');
