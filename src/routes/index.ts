@@ -7,9 +7,9 @@ import file from './file';
 
 const router = Router();
 
-router.use('/login', login);
-
 router.use(verifyToken);
+
+router.use('/login', login);
 router.use((req, res, next) => {
   if (Object.prototype.hasOwnProperty.call(req.query, 'raw')) {
     file(req, res, next);

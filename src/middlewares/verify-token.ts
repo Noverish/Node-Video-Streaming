@@ -9,27 +9,31 @@ const users: User[] = JSON.parse(readFileSync(USER_DB_FILE_PATH).toString());
 
 export default function (req: Request, res: Response, next: NextFunction) {
   const token: string = req.cookies[COOKIE_KEY] || req.query[COOKIE_KEY];
-
-  if (!token) {
-    res.redirect('/login');
-    return;
-  }
+  const isLoginPath = req.path === '/login';
 
   verifyToken(token)
     .then((name: string) => {
       const user: User | undefined = users.find((v) => v.name === name);
       if (user) {
         req[USER_FIELD] = user;
-        next();
+        if (isLoginPath) {
+          res.redirect('/');
+        } else {
+          next();
+        }
       } else {
-        res.status(401);
-        res.clearCookie(COOKIE_KEY);
-        res.json({ msg: 'Removed User' });
+        verifyFailure(res, next, isLoginPath);
       }
     })
-    .catch(() => {
-      res.status(401);
-      res.clearCookie(COOKIE_KEY);
-      res.json({ msg: 'Invalid Token' });
-    });
+    .catch(() => verifyFailure(res, next, isLoginPath));
+}
+
+function verifyFailure(res: Response, next: NextFunction, isLoginPath: boolean) {
+  if (isLoginPath) {
+    next();
+  } else {
+    res.status(401);
+    res.clearCookie(COOKIE_KEY);
+    res.redirect('/login');
+  }
 }
