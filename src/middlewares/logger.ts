@@ -12,6 +12,6 @@ morgan.token('remote-addr', (req: Request, res: Response) => ipv6to4(req.ip || r
 
 morgan.token('date', (req: Request, res: Response) => new Date().toISOString());
 
-morgan.token('url', (req: Request, res: Response) => decodeURI(req.path));
+morgan.token('url', (req: Request, res: Response) => decodeURI(req.originalUrl));
 
 export default morgan('[:date] <:remote-addr> :method :status :response-time ms ":url"');
