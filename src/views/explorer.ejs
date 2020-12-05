@@ -1,5 +1,26 @@
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      table {
+        table-layout: fixed;
+        width: 100%;
+      }
+
+      td:first-child {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      h1, h2, h3 {
+        word-break: break-all;
+      }
+
+      td:last-child {
+        text-align: center;
+      }
+    </style>
     <title>Node Video Streaming</title>
   </head>
   <body background-color="white">
@@ -8,11 +29,15 @@
     <h3>Path: <%= path %></h3>
     <hr>
     <table>
-      <thead>
-        <th>Name</th>
-        <th>Size</th>
-      </thead>
+      <colgroup>
+        <col>
+        <col style="width: 60px">
+      </colgroup> 
       <tbody>
+        <tr>
+          <th>Name</th>
+          <th>Size</th>
+        </tr>
         <% for(var i = 0; i < files.length; i++) { %>
         <tr>
           <td><a href="<%= files[i].path %>"><%= files[i].name %></a></td>
