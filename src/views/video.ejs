@@ -1,33 +1,143 @@
 <html>
-  <head>
-    <link href="https://vjs.zencdn.net/7.6.0/video-js.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/videojs-seek-buttons/dist/videojs-seek-buttons.css" rel="stylesheet">
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <video id='my-video' class='video-js' controls preload='none' width='640' height='360' data-setup='{}'>
-      <source src='<%= videoPath %>' type='video/mp4' />
-      <% for (const subtitle of subtitles) { %>
-        <track kind="captions" src="<%= subtitle.url %>" label="<%= subtitle.language %>" default />
-      <% } %>
-      <p class='vjs-no-js'>
-        To view this video please enable JavaScript, and consider upgrading to a web browser that
-        <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
-      </p>
-    </video>
-    
-    <script src='https://vjs.zencdn.net/7.6.0/video.js'></script>
-    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
-    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-    
-    <script src="/videojs-skin.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/videojs-seek-buttons/dist/videojs-seek-buttons.min.js"></script>
-    <script>
-      var video = videojs('my-video');
-      video.seekButtons({
-        forward: 10,
-        back: 10
-      });
-    </script>
-  </body>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="https://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.3/plyr.css" />
+
+  <style>
+    #player {
+      height: auto;
+    }
+
+    table {
+      border-collapse: collapse;
+      margin: 12px 0;
+    }
+
+    h3,
+    #mobile-noti {
+      margin: 24px 0;
+      word-break: break-all;
+    }
+
+    table,
+    th,
+    tr,
+    td {
+      border: 1px solid black;
+    }
+
+    td {
+      padding: 2px 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="row medium-8 large-7 columns">
+    <div class="blog-post">
+      <h3><%= title %></h3>
+      <video id="player" playsinline controls>
+        <source src="<%= videoPath %>" type="video/mp4" />
+        <% for (const subtitle of subtitles) { %>
+        <track kind="captions" src="<%= subtitle.url %>" label="<%= subtitle.language %>"
+          srclang="<%= subtitle.language %>" default />
+        <% } %>
+      </video>
+      <p id="mobile-noti">Touch video twice to rewind/forward video</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Action</th>
+            <th>Key</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>0</code> to <code>9</code></td>
+            <td>Seek from 0 to 90% respectively</td>
+            <td><code>M</code></td>
+            <td>Toggle mute</td>
+          </tr>
+          <tr>
+            <td><code>space</code></td>
+            <td>Toggle playback</td>
+            <td><code>F</code></td>
+            <td>Toggle fullscreen</td>
+          </tr>
+          <tr>
+            <td>←</td>
+            <td>Seek backward by the <code>10</code> seconds</td>
+            <td>↑</td>
+            <td>Increase volume</td>
+          </tr>
+          <tr>
+            <td>→</td>
+            <td>Seek forward by the <code>10</code> seconds</td>
+            <td>↓</td>
+            <td>Decrease volume</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://cdn.plyr.io/3.6.3/plyr.polyfilled.js"></script>
+  <script>
+    document.getElementsByTagName("html")[0].setAttribute("lang", navigator.language);
+
+    const player = new Plyr('#player', {
+      keyboard: { global: true },
+    });
+    player.on('enterfullscreen', (event) => {
+      const instance = event.detail.plyr;
+      screen.orientation.lock('landscape');
+    });
+    player.on('exitfullscreen', (event) => {
+      const instance = event.detail.plyr;
+      screen.orientation.unlock();
+    });
+
+    if ('ontouchstart' in window) {
+      document.getElementsByTagName('table')[0].remove();
+
+      const DOUBLE_TAB_DURATION = 300;
+      let previous = 0;
+
+      document.getElementById("player").addEventListener('touchstart', (event) => {
+        console.log('touchstart');
+        const touch = event.touches.item(0);
+        const { x, right, width } = event.target.getBoundingClientRect();
+
+        const isLeft = (touch.pageX < x + width / 2);
+
+        const current = Date.now();
+        const delta = current - previous;
+
+        if (delta < DOUBLE_TAB_DURATION) {
+          if (isLeft) {
+            player.rewind();
+          } else {
+            player.forward();
+          }
+        }
+
+        previous = current;
+      }, true);
+
+    } else {
+      document.getElementById('mobile-noti').remove();
+
+      document.getElementById("player").addEventListener('onclick', (event) => {
+        player.togglePlay();
+      }, true)
+    }
+  </script>
+</body>
+
 </html>
